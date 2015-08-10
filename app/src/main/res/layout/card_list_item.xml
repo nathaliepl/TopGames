@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/LayoutFillWrap"
+    android:padding="@dimen/activity_vertical_margin"
+    android:background="#fff">
+
+    <LinearLayout
+        style="@style/LayoutFillWrap"
+        android:layout_toLeftOf="@+id/img_game">
+
+        <TextView
+            android:id="@+id/tv_game_name"
+            style="@style/Text.Large.ColorDark"
+            android:layout_width="match_parent"
+            android:textSize="17sp" />
+
+        <TextView
+            android:id="@+id/tv_viewers"
+            style="@style/Text.Small.ColorLight"
+            android:text="@string/viewers_total" />
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/img_game"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="15dp"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop" />
+
+</RelativeLayout>

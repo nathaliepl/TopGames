@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <style name="Text">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/text_size_medium</item>
+        <item name="android:textColor">@color/primary_text</item>
+    </style>
+
+    <style name="Text.Small">
+        <item name="android:textSize">@dimen/text_size_small</item>
+    </style>
+
+
+    <style name="Text.Small.ColorLight" parent="Text.Small">
+        <item name="android:textColor">@color/secondary_text</item>
+    </style>
+
+    <style name="Text.Large">
+        <item name="android:textSize">@dimen/text_size_large</item>
+    </style>
+
+    <style name="Text.Large.ColorDark" parent="Text.Large">
+        <item name="android:textColor">@color/primary_text</item>
+    </style>
+</resources>

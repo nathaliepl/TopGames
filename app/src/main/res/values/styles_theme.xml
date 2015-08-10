@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+    <style name="AppTheme" parent="@style/Theme.AppCompat.NoActionBar">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="colorAccent">@color/accent</item>
+
+        <item name="android:textColorPrimary">@color/primary_text</item>
+
+        <item name="homeAsUpIndicator">@drawable/abc_ic_ab_back_mtrl_am_alpha</item>
+
+        <item name="android:windowBackground">@color/background</item>
+
+    </style>
+
+    <style name="ToolbarStyle" parent="Widget.AppCompat.Toolbar">
+        <item name="android:background">@color/primary</item>
+        <item name="popupTheme">@style/ThemeOverlay.AppCompat</item>
+        <item name="theme">@style/ToolbarTheme</item>
+    </style>
+
+    <style name="ToolbarStyleLight" parent="ToolbarStyle">
+        <item name="android:background">@color/text_icons</item>
+        <item name="theme">@style/ToolbarTheme</item>
+    </style>
+
+    <style name="ToolbarTheme" parent="ThemeOverlay.AppCompat.ActionBar">
+        <item name="android:textColorSecondary">@color/toolbar_text</item>
+        <item name="android:textColorPrimary">@color/toolbar_text</item>
+        <item name="android:textColorPrimaryInverse">@color/accent</item>
+        <item name="actionMenuTextColor">@color/toolbar_text</item>
+    </style>
+
+    <style name="DropDownItemStyle">
+        <item name="android:textColor">@color/primary_text</item>
+        <item name="android:paddingLeft">40dp</item>
+    </style>
+
+    <style name="PopupMenuTextAppearance.Large" parent="android:TextAppearance.Medium">
+        <item name="android:textColor">@color/primary_text</item>
+    </style>
+
+    <style name="AppThemeTransparent" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation</item>
+    </style>
+
+</resources>

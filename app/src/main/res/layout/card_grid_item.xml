@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card_view"
+    style="@style/CardViewStyle"
+    app:cardUseCompatPadding="true">
+
+    <LinearLayout
+        android:id="@+id/container"
+        style="@style/LayoutFillWrap">
+
+        <ImageView
+            android:id="@+id/img_game"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop" />
+
+        <LinearLayout style="@style/CardViewContent">
+
+            <TextView
+                android:id="@+id/tv_game_name"
+                style="@style/Text.Large.ColorDark"
+                android:layout_width="match_parent"
+                android:textSize="17sp" />
+
+            <TextView
+                android:id="@+id/tv_viewers"
+                style="@style/Text.Small.ColorLight"
+                android:text="@string/viewers_total" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>
