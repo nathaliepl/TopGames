@@ -17,6 +17,8 @@ import com.test.twitch.topgames.adapter.ItemRecyclerViewAdapter;
 import com.test.twitch.topgames.api.API;
 import com.test.twitch.topgames.model.TopGamesResponse;
 import com.test.twitch.topgames.ui.DividerItemDecoration;
+import com.test.twitch.topgames.ui.RecyclerEndlessScrollListener;
+import com.test.twitch.topgames.ui.OnBottomListener;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -29,8 +31,9 @@ public class MainActivity extends AppCompatActivity {
 
     private CharSequence mMenuItemViewModeTitle;
     private TopGamesResponse mTopGamesResponse;
-    private boolean isListMode = true;
     private ItemRecyclerViewAdapter mAdapter;
+
+    private boolean isListMode = true;
 
     private RecyclerView mRecyclerView;
 
@@ -46,12 +49,20 @@ public class MainActivity extends AppCompatActivity {
         if (mAdapter == null) {
             mAdapter = new ItemRecyclerViewAdapter(this, isListMode);
             mRecyclerView.setAdapter(mAdapter);
+
+            mRecyclerView.addOnScrollListener(new RecyclerEndlessScrollListener(new OnBottomListener() {
+                @Override
+                public void onBottom() {
+                    mAdapter.nextPage();
+                }
+            }));
         }
 
         if (savedInstanceState != null) {
             isListMode = savedInstanceState.getBoolean(SAVED_INSTANCE_STATE_SHOWING_LIST, true);
             mAdapter.setResponseAndResetData((TopGamesResponse) savedInstanceState.getSerializable(SAVED_INSTANCE_STATE_TOP_GAMES_RESPONSE));
         } else {
+            mAdapter.setLoadingMoreItems(true);
             new Thread(new Runnable() {
                 @Override
                 public void run() {
@@ -61,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
                             if (topGamesResponse != null) {
                                 mTopGamesResponse = topGamesResponse;
                                 mAdapter.setResponseAndResetData(mTopGamesResponse);
+                                mAdapter.setLoadingMoreItems(false);
                             }
                         }
 
@@ -74,6 +86,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
         defineLayoutViewMode(isListMode, savedInstanceState == null);
+
+
     }
 
     @Override

@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 import com.test.twitch.topgames.R;
+import com.test.twitch.topgames.api.API;
 import com.test.twitch.topgames.model.TopGame;
 import com.test.twitch.topgames.model.TopGamesResponse;
 import com.test.twitch.topgames.ui.ImageByDensityUtil;
@@ -18,16 +19,23 @@ import com.test.twitch.topgames.ui.ImageByDensityUtil;
 import java.util.ArrayList;
 import java.util.List;
 
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
+
 /**
  * Created by nathalielima on 8/6/15.
  */
 public class ItemRecyclerViewAdapter extends RecyclerView.Adapter<ItemRecyclerViewAdapter.ItemViewHolder> {
 
+    private static final int TOP_LIMIT = 50;
     private static final int VIEW_TYPE_LIST = 0;
     private static final int VIEW_TYPE_GRID = 1;
     private List<TopGame> topGamesList = new ArrayList<>();
     private Context context;
     private boolean isListMode;
+    private TopGamesResponse mTopGamesResponse;
+    private boolean isLoadingMoreItems;
 
     public ItemRecyclerViewAdapter(Context context, boolean isListMode) {
         this.context = context;
@@ -64,6 +72,7 @@ public class ItemRecyclerViewAdapter extends RecyclerView.Adapter<ItemRecyclerVi
     }
 
     public void setResponseAndResetData(TopGamesResponse response) {
+        mTopGamesResponse = response;
         if (response == null) {
             return;
         }
@@ -79,6 +88,53 @@ public class ItemRecyclerViewAdapter extends RecyclerView.Adapter<ItemRecyclerVi
 
     public void notifyLayoutViewChange(boolean isListMode) {
         this.isListMode = isListMode;
+        notifyDataSetChanged();
+    }
+
+    public void nextPage() {
+        final Callback callback = new Callback<TopGamesResponse>() {
+
+            @Override
+            public void success(TopGamesResponse topGamesResponse, Response response) {
+                if (response != null && response.getStatus() >= 200 && response.getStatus() < 300) {
+                    mTopGamesResponse = topGamesResponse;
+                    List<TopGame> list = topGamesResponse.getTop();
+
+                    if (list != null) {
+                        addAll(list);
+                    }
+
+                    setLoadingMoreItems(false);
+
+                }
+            }
+
+            @Override
+            public void failure(RetrofitError retrofitError) {
+            }
+        };
+
+        if (!this.isLoadingMoreItems) {
+            if (topGamesList.size() >= TOP_LIMIT) {
+                return;
+            }
+        }
+
+        this.setLoadingMoreItems(true);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                API.getTopGamesNextPage(mTopGamesResponse.get_links().getNext(), callback);
+            }
+        }).start();
+    }
+
+    public void setLoadingMoreItems(boolean loadingMoreItems) {
+        this.isLoadingMoreItems = loadingMoreItems;
+    }
+
+    public void addAll(List<TopGame> topGames) {
+        topGamesList.addAll(topGames);
         notifyDataSetChanged();
     }
 

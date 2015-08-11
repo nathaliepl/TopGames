@@ -18,7 +18,7 @@ public interface ApiService {
     @Headers({
             "Accept: application/vnd.twitchtv.v3+json"
     })
-    @GET("/games/top?limit=50")
+    @GET("/games/top")
     void getTopGames(Callback<TopGamesResponse> callback);
 
 
